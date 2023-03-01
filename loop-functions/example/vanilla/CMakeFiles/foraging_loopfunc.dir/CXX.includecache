@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/vagrant/AutoMoDe-loopfunctions/loop-functions/vanilla/ForagingTwoSpotsLoopFunc.cpp
+ForagingTwoSpotsLoopFunc.h
+/home/vagrant/AutoMoDe-loopfunctions/loop-functions/vanilla/ForagingTwoSpotsLoopFunc.h
+
+/home/vagrant/AutoMoDe-loopfunctions/loop-functions/vanilla/ForagingTwoSpotsLoopFunc.h
+map
+-
+argos3/core/simulator/space/space.h
+-
+argos3/plugins/robots/e-puck/simulator/epuck_entity.h
+-
+../../src/CoreLoopFunctions.h
+/home/vagrant/AutoMoDe-loopfunctions/src/CoreLoopFunctions.h
+
+/home/vagrant/AutoMoDe-loopfunctions/src/CoreLoopFunctions.h
+argos3/core/simulator/space/space.h
+-
+argos3/core/simulator/loop_functions.h
+-
+argos3/plugins/robots/e-puck/simulator/epuck_entity.h
+-
+

@@ -1,0 +1,6 @@
+/home/vagrant/AutoMoDe-loopfunctions/loop-functions/example/CMakeFiles/edit_cache.dir
+/home/vagrant/AutoMoDe-loopfunctions/loop-functions/example/CMakeFiles/rebuild_cache.dir
+/home/vagrant/AutoMoDe-loopfunctions/loop-functions/example/vanilla/CMakeFiles/edit_cache.dir
+/home/vagrant/AutoMoDe-loopfunctions/loop-functions/example/vanilla/CMakeFiles/rebuild_cache.dir
+/home/vagrant/AutoMoDe-loopfunctions/loop-functions/example/vanilla/CMakeFiles/foraging_loopfunc.dir
+/home/vagrant/AutoMoDe-loopfunctions/loop-functions/example/vanilla/CMakeFiles/aggregation_loopfunc.dir
