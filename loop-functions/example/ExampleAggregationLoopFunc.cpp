@@ -20,6 +20,7 @@ ExampleAggregationLoopFunction::ExampleAggregationLoopFunction() {
   m_fObjectiveFunction = 0;
 }
 
+
 /****************************************/
 /****************************************/
 

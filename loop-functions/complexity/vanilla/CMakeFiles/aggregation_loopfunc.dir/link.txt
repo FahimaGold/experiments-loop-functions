@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC   -shared -Wl,-soname,libaggregation_loopfunc.so -o libaggregation_loopfunc.so CMakeFiles/aggregation_loopfunc.dir/AggregationTwoSpotsLoopFunc.o  -L/home/vagrant/AutoMoDe-loopfunctions/loop-functions/complexity/src -largos3plugin__epuck -Wl,-rpath,/home/vagrant/AutoMoDe-loopfunctions/loop-functions/complexity/src 

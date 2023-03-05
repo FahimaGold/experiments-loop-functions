@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC   -shared -Wl,-soname,libforaging_loopfunc.so -o libforaging_loopfunc.so CMakeFiles/foraging_loopfunc.dir/ForagingTwoSpotsLoopFunc.o  -L/home/vagrant/AutoMoDe-loopfunctions/loop-functions/complexity/src -largos3plugin__epuck -Wl,-rpath,/home/vagrant/AutoMoDe-loopfunctions/loop-functions/complexity/src 

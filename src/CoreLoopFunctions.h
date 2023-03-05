@@ -67,6 +67,8 @@ class CoreLoopFunctions: public CLoopFunctions {
      */
     virtual CVector3 GetRandomPosition() = 0;
 
+  
+
 };
 
 #endif

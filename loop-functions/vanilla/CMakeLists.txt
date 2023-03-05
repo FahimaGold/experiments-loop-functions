@@ -5,10 +5,18 @@ link_directories(
 	${CMAKE_BINARY_DIR}/src
     )
 
+
+
 add_library(aggregation_loopfunc SHARED AggregationTwoSpotsLoopFunc.h AggregationTwoSpotsLoopFunc.cpp)
 target_link_libraries(aggregation_loopfunc argos3plugin_${ARGOS_BUILD_FOR}_epuck)
 
 add_library(foraging_loopfunc SHARED ForagingTwoSpotsLoopFunc.h ForagingTwoSpotsLoopFunc.cpp)
 target_link_libraries(foraging_loopfunc argos3plugin_${ARGOS_BUILD_FOR}_epuck)
+
+# Adding single spot aggregation
+
+add_library(aggregation_single_loopfunc SHARED AggregationSingleSpotLoopFunc.h AggregationSingleSpotLoopFunc.cpp)
+target_link_libraries(aggregation_single_loopfunc argos3plugin_${ARGOS_BUILD_FOR}_epuck)
+
 
 

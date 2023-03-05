@@ -31,6 +31,8 @@ class ExampleAggregationLoopFunction: public CoreLoopFunctions {
 
     Real GetObjectiveFunction();
 
+
+
     /*
      * Returns a vector containing a random position inside a circle of radius
      * m_fDistributionRadius and centered in (0,0).

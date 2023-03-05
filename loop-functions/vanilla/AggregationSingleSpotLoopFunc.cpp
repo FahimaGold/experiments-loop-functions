@@ -1,22 +1,22 @@
 /**
-  * @file <loop-functions/AggregationTwoSpotsLoopFunc.cpp>
+  * @file <loop-functions/AggregationSingleSpotLoopFunc.cpp>
   *
-  * @author Antoine Ligot - <aligot@ulb.ac.be>
+  * @author Fahima Mokhtari - <f.mokhtari@innopolis.university>
   *
   * @license MIT License
   */
 
-#include "AggregationTwoSpotsLoopFunc.h"
+#include "AggregationSingleSpotLoopFunc.h"
 
 /****************************************/
 /****************************************/
 
-AggregationTwoSpotsLoopFunction::AggregationTwoSpotsLoopFunction() {
+AggregationSingleSpotLoopFunction::AggregationSingleSpotLoopFunction() {
   m_fRadius = 0.3;
-  m_cCoordSpot1 = CVector2(0.55,0);
-  m_cCoordSpot2 = CVector2(-0.55,0);
-  m_unScoreSpot1 = 0;
-  m_unScoreSpot2 = 0;
+  m_cCoordSpot = CVector2(0,0);
+ 
+  m_unScoreSpot = 0;
+ 
   m_fObjectiveFunction = 0;
 }
 
@@ -25,10 +25,10 @@ AggregationTwoSpotsLoopFunction::AggregationTwoSpotsLoopFunction() {
 
 // Validation function to make sure that the robots initially are outside the black spots.
 
-bool AggregationTwoSpotsLoopFunction::isInitiallyOutsideBlackSpot(CVector2 cEpuckPosition){
-   Real fDistanceSpot1 = (m_cCoordSpot1 - cEpuckPosition).Length();
-    Real fDistanceSpot2 = (m_cCoordSpot2 - cEpuckPosition).Length();
-     if (fDistanceSpot1 <= m_fRadius || fDistanceSpot2 <= m_fRadius) 
+bool AggregationSingleSpotLoopFunction::isInitiallyOutsideBlackSpot(CVector2 cEpuckPosition){
+   Real fDistanceSpot = (m_cCoordSpot - cEpuckPosition).Length();
+    ;
+     if (fDistanceSpot <= m_fRadius) 
      return false;
   return true;
 }
@@ -36,7 +36,7 @@ bool AggregationTwoSpotsLoopFunction::isInitiallyOutsideBlackSpot(CVector2 cEpuc
 /****************************************/
 /****************************************/
 
-void AggregationTwoSpotsLoopFunction::MoveRobots() {
+void AggregationSingleSpotLoopFunction::MoveRobots() {
   CEPuckEntity* pcEpuck;
   bool bPlaced = false;
   UInt32 unTrials;
@@ -66,12 +66,12 @@ void AggregationTwoSpotsLoopFunction::MoveRobots() {
 
 
 
-AggregationTwoSpotsLoopFunction::AggregationTwoSpotsLoopFunction(const AggregationTwoSpotsLoopFunction& orig) {}
+AggregationSingleSpotLoopFunction::AggregationSingleSpotLoopFunction(const AggregationSingleSpotLoopFunction& orig) {}
 
 /****************************************/
 /****************************************/
 
-void AggregationTwoSpotsLoopFunction::Init(TConfigurationNode& t_tree) {
+void AggregationSingleSpotLoopFunction::Init(TConfigurationNode& t_tree) {
     // CoreLoopFunctions::Init(t_tree);
     m_pcRng = CRandom::CreateRNG("argos");
     TConfigurationNode cParametersNode;
@@ -89,24 +89,19 @@ void AggregationTwoSpotsLoopFunction::Init(TConfigurationNode& t_tree) {
 /****************************************/
 
 
-AggregationTwoSpotsLoopFunction::~AggregationTwoSpotsLoopFunction() {}
+AggregationSingleSpotLoopFunction::~AggregationSingleSpotLoopFunction() {}
 
 /****************************************/
 /****************************************/
 
-void AggregationTwoSpotsLoopFunction::Destroy() {}
+void AggregationSingleSpotLoopFunction::Destroy() {}
 
 /****************************************/
 /****************************************/
 
-argos::CColor AggregationTwoSpotsLoopFunction::GetFloorColor(const argos::CVector2& c_position_on_plane) {
+argos::CColor AggregationSingleSpotLoopFunction::GetFloorColor(const argos::CVector2& c_position_on_plane) {
   CVector2 vCurrentPoint(c_position_on_plane.GetX(), c_position_on_plane.GetY());
-  Real d = (m_cCoordSpot1 - vCurrentPoint).Length();
-  if (d <= m_fRadius) {
-    return CColor::BLACK;
-  }
-
-  d = (m_cCoordSpot2 - vCurrentPoint).Length();
+  Real d = (m_cCoordSpot - vCurrentPoint).Length();
   if (d <= m_fRadius) {
     return CColor::BLACK;
   }
@@ -118,17 +113,17 @@ argos::CColor AggregationTwoSpotsLoopFunction::GetFloorColor(const argos::CVecto
 /****************************************/
 /****************************************/
 
-void AggregationTwoSpotsLoopFunction::Reset() {
+void AggregationSingleSpotLoopFunction::Reset() {
   m_fObjectiveFunction = 0;
-  m_unScoreSpot1 = 0;
-  m_unScoreSpot2 = 0;
+  m_unScoreSpot = 0;
+
   CoreLoopFunctions::Reset();
 }
 
 /****************************************/
 /****************************************/
 
-void AggregationTwoSpotsLoopFunction::PostExperiment() {
+void AggregationSingleSpotLoopFunction::PostExperiment() {
   CSpace::TMapPerType& tEpuckMap = GetSpace().GetEntitiesByType("epuck");
   CVector2 cEpuckPosition(0,0);
   for (CSpace::TMapPerType::iterator it = tEpuckMap.begin(); it != tEpuckMap.end(); ++it) {
@@ -136,30 +131,28 @@ void AggregationTwoSpotsLoopFunction::PostExperiment() {
     cEpuckPosition.Set(pcEpuck->GetEmbodiedEntity().GetOriginAnchor().Position.GetX(),
                        pcEpuck->GetEmbodiedEntity().GetOriginAnchor().Position.GetY());
 
-    Real fDistanceSpot1 = (m_cCoordSpot1 - cEpuckPosition).Length();
-    Real fDistanceSpot2 = (m_cCoordSpot2 - cEpuckPosition).Length();
-    if (fDistanceSpot1 <= m_fRadius) {
-      m_unScoreSpot1 += 1;
-    } else if (fDistanceSpot2 <= m_fRadius){
-      m_unScoreSpot2 += 1;
-    }
+    Real fDistanceSpot = (m_cCoordSpot - cEpuckPosition).Length();
+    
+    if (fDistanceSpot <= m_fRadius) {
+      m_unScoreSpot += 1;
+    } 
   }
 
-  m_fObjectiveFunction = Max(m_unScoreSpot1, m_unScoreSpot2)/(Real) m_unNumberRobots;
+  m_fObjectiveFunction = m_unScoreSpot/(Real) m_unNumberRobots;
   LOG << "Score = " << m_fObjectiveFunction << std::endl;
 }
 
 /****************************************/
 /****************************************/
 
-Real AggregationTwoSpotsLoopFunction::GetObjectiveFunction() {
+Real AggregationSingleSpotLoopFunction::GetObjectiveFunction() {
   return m_fObjectiveFunction;
 }
 
 /****************************************/
 /****************************************/
 
-CVector3 AggregationTwoSpotsLoopFunction::GetRandomPosition() {
+CVector3 AggregationSingleSpotLoopFunction::GetRandomPosition() {
   Real temp;
   Real a = m_pcRng->Uniform(CRange<Real>(0.0f, 1.0f));
   Real  b = m_pcRng->Uniform(CRange<Real>(0.0f, 1.0f));
@@ -177,4 +170,4 @@ CVector3 AggregationTwoSpotsLoopFunction::GetRandomPosition() {
 
 
 
-REGISTER_LOOP_FUNCTIONS(AggregationTwoSpotsLoopFunction, "aggregation_loop_functions");
+REGISTER_LOOP_FUNCTIONS(AggregationSingleSpotLoopFunction, "aggregation_single_spot_loop_functions");

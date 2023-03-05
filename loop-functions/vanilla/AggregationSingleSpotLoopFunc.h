@@ -8,8 +8,8 @@
   * @license MIT License
   */
 
-#ifndef AGGREGATION_TWO_SPOTS_LOOP_FUNC
-#define AGGREGATION_TWO_SPOTS_LOOP_FUNC
+#ifndef AGGREGATION_SINGLE_SPOT_LOOP_FUNC
+#define AGGREGATION_SINGLE_SPOT_LOOP_FUNC
 
 #include <argos3/core/simulator/space/space.h>
 #include <argos3/plugins/robots/e-puck/simulator/epuck_entity.h>
@@ -18,12 +18,12 @@
 
 using namespace argos;
 
-class AggregationTwoSpotsLoopFunction: public CoreLoopFunctions {
+class AggregationSingleSpotLoopFunction: public CoreLoopFunctions {
   public:
-    AggregationTwoSpotsLoopFunction();
-    AggregationTwoSpotsLoopFunction(const AggregationTwoSpotsLoopFunction& orig);
+    AggregationSingleSpotLoopFunction();
+    AggregationSingleSpotLoopFunction(const AggregationSingleSpotLoopFunction& orig);
 
-    virtual ~AggregationTwoSpotsLoopFunction();
+    virtual ~AggregationSingleSpotLoopFunction();
 
     virtual void Destroy();
     virtual void Init(TConfigurationNode& t_tree);
@@ -41,11 +41,9 @@ class AggregationTwoSpotsLoopFunction: public CoreLoopFunctions {
 
   private:
     Real m_fRadius;
-    CVector2 m_cCoordSpot1;
-    CVector2 m_cCoordSpot2;
+    CVector2 m_cCoordSpot;
 
-    UInt32 m_unScoreSpot1;
-    UInt32 m_unScoreSpot2;
+    UInt32 m_unScoreSpot;
     Real m_fObjectiveFunction;
 };
 
