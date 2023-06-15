@@ -12,6 +12,7 @@
 #define AGGREGATION_TWO_SPOTS_LOOP_FUNC
 
 #include <argos3/core/simulator/space/space.h>
+#include <argos3/plugins/simulator/entities/light_entity.h>
 #include <argos3/plugins/robots/e-puck/simulator/epuck_entity.h>
 
 #include "../../src/CoreLoopFunctions.h"
@@ -34,6 +35,8 @@ class AggregationTwoSpotsLoopFunction: public CoreLoopFunctions {
     Real GetObjectiveFunction();
 
     CVector3 GetRandomPosition();
+    CVector3 GetLeftPosition();
+    virtual void PreStep();
 
   private:
     Real m_fRadius;
@@ -43,6 +46,14 @@ class AggregationTwoSpotsLoopFunction: public CoreLoopFunctions {
     UInt32 m_unScoreSpot1;
     UInt32 m_unScoreSpot2;
     Real m_fObjectiveFunction;
+     /*
+    These variable allow to track the number of timesteps to be 100 and then change the light intensity in the environment
+    
+    */
+    CLightEntity* m_pcLight;;
+    UInt32 m_counter;
+    UInt32 m_numSteps;
+
 };
 
 #endif

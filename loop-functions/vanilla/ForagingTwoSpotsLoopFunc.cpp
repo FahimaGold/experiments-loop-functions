@@ -185,3 +185,28 @@ CVector3 ForagingTwoSpotsLoopFunction::GetRandomPosition() {
 }
 
 REGISTER_LOOP_FUNCTIONS(ForagingTwoSpotsLoopFunction, "foraging_loop_functions");
+
+
+CVector3 ForagingTwoSpotsLoopFunction::GetLeftPosition() {
+    Real temp;
+    Real a = m_pcRng->Uniform(CRange<Real>(0.0f, 0.8f));
+    Real b = m_pcRng->Uniform(CRange<Real>(0.0f, 0.8f));
+    // If b < a, swap them
+    if (b < a) {
+        temp = a;
+        a = b;
+        b = temp;
+    }
+    Real fPosY =  b;  // set the x-coordinate to the left boundary of the arena
+    Real fPosX =  a * m_fDistributionRadius * cos(2 * CRadians::PI.GetValue() * (a/b));
+    //Real fPosZ = m_pcRng->Uniform(CRange<Real>(-0.5f, 0.5f));  // generate a random z-coordinate
+
+    // Calculate the opposite position with respect to the light source
+    
+    CVector3 oppositePosition(fPosX, fPosY, 0);  // opposite position
+    std::cout  <<"PosX: "<< fPosX << " PosY: "<< fPosY <<std::endl;
+   
+
+    return oppositePosition;
+}
+

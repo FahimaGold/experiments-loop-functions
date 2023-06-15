@@ -30,6 +30,19 @@ AggregationTwoSpotsLoopFunction::AggregationTwoSpotsLoopFunction(const Aggregati
 
 void AggregationTwoSpotsLoopFunction::Init(TConfigurationNode& t_tree) {
     CoreLoopFunctions::Init(t_tree);
+    // Getting the light entity
+    CSpace::TMapPerType& mapEntities = GetSpace().GetEntitiesByType("light");
+      if (!mapEntities.empty()) {
+         CSpace::TMapPerType::iterator it = mapEntities.begin();
+         m_pcLight = any_cast<CLightEntity*>(it->second);
+      } else {
+         THROW_ARGOSEXCEPTION("No light entity found in the space!");
+      }
+
+    m_counter = 0;
+   // we want to change the light intensity after 100 timesteps
+   m_numSteps = 100;
+    PreStep();
 }
 
 /****************************************/
@@ -121,5 +134,44 @@ CVector3 AggregationTwoSpotsLoopFunction::GetRandomPosition() {
 
   return CVector3(fPosX, fPosY, 0);
 }
+
+// Placing robots on the opposite side of the light source
+CVector3 AggregationTwoSpotsLoopFunction::GetLeftPosition() {
+  
+    Real temp;
+    Real a = m_pcRng->Uniform(CRange<Real>(0.0f, 0.8f));
+    Real b = m_pcRng->Uniform(CRange<Real>(0.0f, 0.8f));
+    // If b < a, swap them
+    if (b < a) {
+        temp = a;
+        a = b;
+        b = temp;
+    }
+    Real fPosY =  b;  // set the x-coordinate to the left boundary of the arena
+    Real fPosX =  a * m_fDistributionRadius * cos(2 * CRadians::PI.GetValue() * (a/b));
+    //Real fPosZ = m_pcRng->Uniform(CRange<Real>(-0.5f, 0.5f));  // generate a random z-coordinate
+
+    // Calculate the opposite position with respect to the light source
+    
+    CVector3 oppositePosition(fPosX, fPosY, 0);  // opposite position
+    std::cout  <<"PosX: "<< fPosX << " PosY: "<< fPosY <<std::endl;
+   
+
+    return oppositePosition;
+}
+
+ void AggregationTwoSpotsLoopFunction:: PreStep() {
+      // Increment the counter
+      m_counter++;
+      
+      // Check if the desired number of time steps is reached
+      if (m_counter == m_numSteps) {
+         // Modify the light intensity
+         Real newIntensity = 1.0; // Set your desired intensity value
+         m_pcLight->SetIntensity(newIntensity);
+      }
+      
+   }
+
 
 REGISTER_LOOP_FUNCTIONS(AggregationTwoSpotsLoopFunction, "aggregation_loop_functions");
