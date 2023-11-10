@@ -31,6 +31,18 @@ ForagingTwoSpotsLoopFunction::ForagingTwoSpotsLoopFunction(const ForagingTwoSpot
 
 void ForagingTwoSpotsLoopFunction::Init(TConfigurationNode& t_tree) {
     CoreLoopFunctions::Init(t_tree);
+    // Getting the light entity
+    CSpace::TMapPerType& mapEntities = GetSpace().GetEntitiesByType("light");
+      if (!mapEntities.empty()) {
+         CSpace::TMapPerType::iterator it = mapEntities.begin();
+         m_pcLight = any_cast<CLightEntity*>(it->second);
+      } else {
+         THROW_ARGOSEXCEPTION("No light entity found in the space!");
+      }
+     m_counter = 0;
+   // we want to change the light intensity after 100 timesteps
+   m_numSteps = 100;
+    PreStep();
 }
 
 /****************************************/
@@ -184,7 +196,20 @@ CVector3 ForagingTwoSpotsLoopFunction::GetRandomPosition() {
   return CVector3(fPosX, fPosY, 0);
 }
 
-REGISTER_LOOP_FUNCTIONS(ForagingTwoSpotsLoopFunction, "foraging_loop_functions");
+void ForagingTwoSpotsLoopFunction:: PreStep() {
+      // Increment the counter
+      m_counter++;
+      
+      // Check if the desired number of time steps is reached
+      if (m_counter == m_numSteps) {
+         // Modify the light intensity
+         Real newIntensity = 5.0; // Set your desired intensity value
+         m_pcLight->SetIntensity(newIntensity);
+      }
+      
+   }
+
+
 
 
 CVector3 ForagingTwoSpotsLoopFunction::GetLeftPosition() {
@@ -210,3 +235,4 @@ CVector3 ForagingTwoSpotsLoopFunction::GetLeftPosition() {
     return oppositePosition;
 }
 
+REGISTER_LOOP_FUNCTIONS(ForagingTwoSpotsLoopFunction, "foraging_loop_functions");

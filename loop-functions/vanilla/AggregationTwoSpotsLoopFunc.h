@@ -14,8 +14,14 @@
 #include <argos3/core/simulator/space/space.h>
 #include <argos3/plugins/simulator/entities/light_entity.h>
 #include <argos3/plugins/robots/e-puck/simulator/epuck_entity.h>
-
+#include <argos3/plugins/simulator/entities/box_entity.h>
+#include <argos3/core/simulator/entity/composable_entity.h>
+#include <argos3/core/simulator/entity/entity.h>
 #include "../../src/CoreLoopFunctions.h"
+#include <argos3/plugins/simulator/physics_engines/dynamics2d/dynamics2d_engine.h>
+#include <argos3/core/simulator/physics_engine/physics_model.h>
+
+
 
 using namespace argos;
 
@@ -37,7 +43,7 @@ class AggregationTwoSpotsLoopFunction: public CoreLoopFunctions {
     CVector3 GetRandomPosition();
     CVector3 GetLeftPosition();
     virtual void PreStep();
-
+   
   private:
     Real m_fRadius;
     CVector2 m_cCoordSpot1;
@@ -50,9 +56,11 @@ class AggregationTwoSpotsLoopFunction: public CoreLoopFunctions {
     These variable allow to track the number of timesteps to be 100 and then change the light intensity in the environment
     
     */
-    CLightEntity* m_pcLight;;
+   //  CLightEntity* m_pcLight;;
     UInt32 m_counter;
     UInt32 m_numSteps;
+
+
 
 };
 

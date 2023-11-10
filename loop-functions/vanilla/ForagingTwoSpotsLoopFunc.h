@@ -15,6 +15,7 @@
 
 #include <argos3/core/simulator/space/space.h>
 #include <argos3/plugins/robots/e-puck/simulator/epuck_entity.h>
+#include <argos3/plugins/simulator/entities/light_entity.h>
 
 #include "../../src/CoreLoopFunctions.h"
 
@@ -32,6 +33,7 @@ class ForagingTwoSpotsLoopFunction: public CoreLoopFunctions {
     virtual argos::CColor GetFloorColor(const argos::CVector2& c_position_on_plane);
     virtual void PostStep();
     virtual void Reset();
+    virtual void PreStep();
 
     Real GetObjectiveFunction();
 
@@ -51,6 +53,13 @@ class ForagingTwoSpotsLoopFunction: public CoreLoopFunctions {
     Real m_fObjectiveFunction;
 
     std::map<std::string, UInt32> m_mapFoodData;
+      /*
+    These variable allow to track the number of timesteps to be 100 and then change the light intensity in the environment
+    
+    */
+    CLightEntity* m_pcLight;;
+    UInt32 m_counter;
+    UInt32 m_numSteps;
 
 };
 
