@@ -50,6 +50,7 @@ class CoreLoopFunctions: public CLoopFunctions {
 
     CRandom::CRNG* m_pcRng;
 
+   
   public:
     /*
      * Initialization method where the parameters of the loop function
@@ -66,7 +67,8 @@ class CoreLoopFunctions: public CLoopFunctions {
      * Return a random position.
      */
     virtual CVector3 GetRandomPosition() = 0;
-
+    virtual CVector3 GetLeftPosition() = 0;
+  
 };
 
 #endif

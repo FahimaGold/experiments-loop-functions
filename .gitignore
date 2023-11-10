@@ -32,7 +32,7 @@
 *.app
 
 # Other
-build/*
+/build/*
 loop-functions/AutoMoDe-Modules/versions/*
 loop-functions/ModularityExperiment/versions/*
 .vscode/*

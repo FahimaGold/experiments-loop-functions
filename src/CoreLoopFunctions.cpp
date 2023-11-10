@@ -25,7 +25,9 @@ void CoreLoopFunctions::Init(argos::TConfigurationNode& t_tree) {
   } catch(std::exception e) {
     LOGERR << "Problem with Attributes in node params" << std::endl;
   }
+  
 
+  
   MoveRobots();
 }
 
@@ -56,6 +58,8 @@ void CoreLoopFunctions::MoveRobots() {
     do {
        ++unTrials;
        CVector3 cEpuckPosition = GetRandomPosition();
+       
+       
        bPlaced = MoveEntity(pcEpuck->GetEmbodiedEntity(),
                             cEpuckPosition,
                             CQuaternion().FromEulerAngles(m_pcRng->Uniform(CRange<CRadians>(CRadians::ZERO,CRadians::TWO_PI)),
@@ -77,3 +81,4 @@ void CoreLoopFunctions::RemoveRobots() {
     RemoveEntity(id.str().c_str());
   }
 }
+
